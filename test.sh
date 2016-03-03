@@ -63,7 +63,7 @@ case $arch in
 		;;
 esac
 
-sudo lttng-sessiond -b
+lttng-sessiond -b
 
 for bin_suffix in "${gen_bin[@]}"; do
 	for syscall_name in "${syscall_to_test[@]}"; do
@@ -81,7 +81,7 @@ done
 
 SESSIOND_PID=$(pgrep lttng-sessiond)
 
-sudo kill -9 ${SESSIOND_PID}
+kill -9 ${SESSIOND_PID}
 
 
 rm -rf $session_path
