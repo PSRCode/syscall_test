@@ -98,7 +98,7 @@ int test_clone()
 
 	stack = (void *) malloc(STACK_SIZE);
 	ret = clone(do_something, stack + STACK_SIZE,
-		    CLONE_VM|CLONE_FILES, NULL);
+		    CLONE_VM|CLONE_FILES, NULL, NULL, NULL);
 
 	/* Return a positive value on clone() failure */
 	return ret == -1 ? 1 : 0;
