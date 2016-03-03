@@ -121,7 +121,11 @@ int main(int argc, char **argv)
 	printf("ok - Valid architecture: arm32\n");
 	printf("# Arm 32 syscall version\n");
 	fd = open("foo", O_WRONLY);
-	ret = syscall(SYS_sync_file_range2, fd, SYNC_FILE_RANGE_WRITE, 0, 100);
+	uint64_t offset = 0;
+	uint64_t nbytes = 1ULL << 7; /* 128 */
+	ret = syscall(SYS_sync_file_range2, fd, SYNC_FILE_RANGE_WRITE,
+			__LONG_LONG_PAIR((long) (offset >> 32), (long) offset),
+			__LONG_LONG_PAIR((long) (nbytes >> 32), (long) nbytes));
 	/* return positive value on syscall failure */
 	ret = ret == -1 ? 1 : 0;
 #elif defined(__aarch64__)
@@ -147,12 +151,14 @@ int main(int argc, char **argv)
 	/* POWER 32-bit */
 	printf("ok - Valid architecture: PowerPC 32\n");
 	printf("# PowerPC 32 syscall version\n");
-	printf("# Nothing to test\n");
-
-	/* Suppress unused variable warnings */
-	(void)fd;
-	ret = -1;
-
+	fd = open("foo", O_WRONLY);
+	uint64_t offset = 0;
+	uint64_t nbytes = 1ULL << 7; /* 128 */
+	ret = syscall(SYS_sync_file_range2, fd, SYNC_FILE_RANGE_WRITE,
+			__LONG_LONG_PAIR((long) (offset >> 32), (long) offset),
+			__LONG_LONG_PAIR((long) (nbytes >> 32), (long) nbytes));
+	/* return positive value on syscall failure */
+	ret = ret == -1 ? 1 : 0;
 #endif /* defined(__powerpc64__) || defined(__ppc64__) || defined(__PPC64__) */
 
 #else
