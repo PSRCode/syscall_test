@@ -10,7 +10,7 @@ ifeq ($(arch), x86_64)
 	CC_COMPAT := $(CC)
 else ifeq ($(arch), aarch64)
 	COMPAT_MODE := 1
-	CC_COMPAT := arm-linux-gnuabihf-gcc
+	CC_COMPAT := arm-linux-gnueabihf-gcc
 else ifeq ($(arch), ppc64)
 	COMPAT_MODE := 1
 	CC_COMPAT := powerpc-linux-gnu-gcc
